@@ -1,0 +1,12 @@
+{
+     "logger": {
+        "name": "proxy-service-DEV",
+        "level": "debug",
+        "toFile": false,
+        "dirLogFile": null
+    },
+    "service": {
+        "name": "proxy service",
+        "port": 5000
+    }
+}
