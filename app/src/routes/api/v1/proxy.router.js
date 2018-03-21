@@ -19,7 +19,8 @@ class ProxyRouter {
     
     ctx.assert(URLS[ctx.params.alias], 400, 'Alias not found');
     
-    logger.debug('query', `${URLS[ctx.params.alias]}${ctx.query.path}`);
+    logger.debug('query', `${URLS[ctx.params.alias]}${ctx.query.path}`, ctx.query);
+
     const req = request({
       method: ctx.request.method,
       url: `${URLS[ctx.params.alias]}${ctx.query.path ? ctx.query.path : ''}`,
