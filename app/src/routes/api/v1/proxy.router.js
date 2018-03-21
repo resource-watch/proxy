@@ -20,11 +20,13 @@ class ProxyRouter {
     ctx.assert(URLS[ctx.params.alias], 400, 'Alias not found');
     
     logger.debug('query', `${URLS[ctx.params.alias]}${ctx.query.path}`, ctx.query);
-
+    let qs = Object.assign({}, ctx.query);
+    delete qs.loggedUser;
+    delete qs.path;
     const req = request({
       method: ctx.request.method,
       url: `${URLS[ctx.params.alias]}${ctx.query.path ? ctx.query.path : ''}`,
-      query: ctx.query
+      qs
     });
     req.on('response', (response) => {
       ctx.response.status = response.statusCode;
