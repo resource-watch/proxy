@@ -54,7 +54,7 @@ spec:
                   name: mssecrets
                   key: API_VERSION
           - name: URLS
-            value: google#https://www.google.com,vizzuality#http://vizzuality.com
+            value: bhuvan3#http://bhuvan3.nrsc.gov.in,bhuvan5#http://bhuvan5.nrsc.gov.in
 
         ports:
           - containerPort: 5000
