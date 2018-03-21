@@ -23,7 +23,7 @@ class ProxyRouter {
     const req = request({
       method: ctx.request.method,
       url: `${URLS[ctx.params.alias]}${ctx.query.path ? ctx.query.path : ''}`,
-      query: ctx.request.query
+      query: ctx.query
     });
     req.on('response', (response) => {
       ctx.response.status = response.statusCode;
