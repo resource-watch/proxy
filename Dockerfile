@@ -1,5 +1,5 @@
 FROM node:8.4
-MAINTAINER raul.requero@vizzuality.com
+MAINTAINER info@vizzuality.com
 
 ENV USER proxy-service
 
