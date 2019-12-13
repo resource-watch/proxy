@@ -54,7 +54,7 @@ spec:
                   name: mssecrets
                   key: API_VERSION
           - name: URLS
-            value: bhuvan#http://bhuvan-vec1.nrsc.gov.in,bhuvan3#http://bhuvan3.nrsc.gov.in,bhuvan5#http://bhuvan5.nrsc.gov.in,wris#http://www.india-wris.nrsc.gov.in
+            value: bhuvan5#http://bhuvan5.nrsc.gov.in,wris#http://59.179.19.250/ArcGIS/services/SubInfoSysLCC,snitcr-ign#http://geos.snitcr.go.cr/be/IGN_5/wms,snitcr-ceniga#http://18.191.99.184:8080/geoserver/wms
 
         ports:
           - containerPort: 5000
