@@ -1,6 +1,7 @@
-FROM node:12-alpine
+FROM node:12
 MAINTAINER info@vizzuality.com
 
+ENV NAME proxy-service
 ENV USER proxy-service
 
 RUN apt-get update && apt-get install -y \
@@ -18,20 +19,21 @@ RUN groupadd -r $USER && useradd -r -g $USER -G audio,video $USER \
 
 RUN yarn global add grunt-cli bunyan
 
-RUN mkdir -p /home/$USER
-COPY package.json /home/$USER/package.json
-COPY yarn.lock /opt/$NAME/yarn.lock
-RUN cd /opt/$NAME && yarn
+RUN mkdir -p /home/$NAME
+COPY package.json /home/$NAME/package.json
+COPY yarn.lock /home/$NAME/yarn.lock
+RUN cd /home/$NAME && yarn
 
 COPY entrypoint.sh /home/$USER/entrypoint.sh
 COPY config /home/$USER/config
 
-WORKDIR /home/$USER
+WORKDIR /home/$NAME
 
-COPY ./app /home/$USER/app
-RUN chown -R $USER:$USER /home/$USER
+COPY ./app /home/$NAME/app
+RUN chown -R $USER:$USER /home/$NAME
 
 # Tell Docker we are going to use this ports
 EXPOSE 5000
+USER $USER
 
 ENTRYPOINT ["./entrypoint.sh"]
