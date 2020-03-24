@@ -3,8 +3,8 @@ kind: Deployment
 metadata:
   namespace: prep
   labels:
-    name: {name}
-  name: {name}
+    name: proxy
+  name: proxy
 spec:
   revisionHistoryLimit: 2
   template:
@@ -12,17 +12,19 @@ spec:
       annotations:
         chaos.alpha.kubernetes.io/enabled: "true"
       labels:
-        name: {name}
+        name: proxy
     spec:
       containers:
-      - name: {name}
-        image: vizzuality/{name}
+      - name: proxy
+        image: vizzuality/proxy
         imagePullPolicy: Always
         resources:
           requests:
-            memory: "128Mi"
+            cpu: "0.5"
+            memory: "256M"
           limits:
-            memory: "512Mi"
+            cpu: "1"
+            memory: "512M"
         args:
           - start
         env:
@@ -33,7 +35,7 @@ spec:
           - name: NODE_PATH
             value: app/src
           - name: LOCAL_URL
-            value: http://{name}.prep.svc.cluster.local:5000
+            value: http://proxy.prep.svc.cluster.local:5000
           - name: CT_URL
             valueFrom:
                 secretKeyRef:
@@ -61,5 +63,22 @@ spec:
           - containerPort: 5000
         securityContext:
           privileged: true
+        readinessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /healthcheck
+            port: 5000
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+          periodSeconds: 15
+        livenessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /healthcheck
+            port: 5000
+          failureThreshold: 3
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+          periodSeconds: 15
 
       restartPolicy: Always

@@ -1,8 +1,8 @@
 {
-    "logger": {
-        "name": "proxy-service",
-        "level": "debug",
-        "toFile": false,
-        "dirLogFile": null
-    }
+  "logger": {
+    "name": "proxy-service",
+    "level": "debug",
+    "toFile": false,
+    "dirLogFile": null
+  }
 }

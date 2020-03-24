@@ -1,5 +1,9 @@
 {
-    "service": {
-        "port": "PORT"
-    }
+  "service": {
+    "port": "PORT"
+  },
+  "urls": "URLS",
+  "logger": {
+    "level": "LOGGER_LEVEL"
+  }
 }
