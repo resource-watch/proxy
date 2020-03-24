@@ -3,10 +3,10 @@ kind: Service
 metadata:
   namespace: prep
   labels:
-    name: {name}
-  name: {name}
+    name: proxy
+  name: proxy
 spec:
   ports:
     - port: 5000
   selector:
-    name: {name}
+    name: proxy

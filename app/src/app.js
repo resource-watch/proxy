@@ -3,6 +3,7 @@ const logger = require('logger');
 const koaLogger = require('koa-logger');
 const config = require('config');
 const loader = require('loader');
+const koaSimpleHealthCheck = require('koa-simple-healthcheck');
 const convert = require('koa-convert');
 const ctRegisterMicroservice = require('ct-register-microservice-node');
 const ErrorSerializer = require('serializers/error.serializer');
@@ -38,6 +39,8 @@ app.use(async (ctx, next) => {
     }
 
 });
+
+app.use(koaSimpleHealthCheck());
 
 app.use(koaLogger());
 loader.loadRoutes(app);

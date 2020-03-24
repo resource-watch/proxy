@@ -1,39 +1,41 @@
 const Router = require('koa-router');
 const logger = require('logger');
+const config = require('config');
 const request = require('request');
 
-const URLS = process.env.URLS.split(',').map(pack => pack.split('#')).reduce((prev, parts) => {
-  prev[parts[0]] = parts[1];
-  return prev;
+const URLS = config.get('urls').split(',').map((pack) => pack.split('#')).reduce((prev, parts) => {
+    // eslint-disable-next-line prefer-destructuring
+    prev[parts[0]] = parts[1];
+    return prev;
 }, {});
 
 logger.debug('URLS', URLS);
 
 const router = new Router({
-  prefix: '/proxy',
+    prefix: '/proxy',
 });
 
-class ProxyRouter {  
+class ProxyRouter {
 
-  static async proxy(ctx) {
-    
-    ctx.assert(URLS[ctx.params.alias], 400, 'Alias not found');
-    
-    logger.debug('query', `${URLS[ctx.params.alias]}${ctx.query.path}`, ctx.query);
-    let qs = Object.assign({}, ctx.query);
-    delete qs.loggedUser;
-    delete qs.path;
-    const req = request({
-      method: ctx.request.method,
-      url: `${URLS[ctx.params.alias]}${ctx.query.path ? ctx.query.path : ''}`,
-      qs
-    });
-    req.on('response', (response) => {
-      ctx.response.status = response.statusCode;
-      ctx.set(response.headers);
-    });
-    ctx.body=req;
-  }
+    static async proxy(ctx) {
+
+        ctx.assert(URLS[ctx.params.alias], 400, 'Alias not found');
+
+        logger.debug('query', `${URLS[ctx.params.alias]}${ctx.query.path}`, ctx.query);
+        const qs = { ...ctx.query };
+        delete qs.loggedUser;
+        delete qs.path;
+        const req = request({
+            method: ctx.request.method,
+            url: `${URLS[ctx.params.alias]}${ctx.query.path ? ctx.query.path : ''}`,
+            qs
+        });
+        req.on('response', (response) => {
+            ctx.response.status = response.statusCode;
+            ctx.set(response.headers);
+        });
+        ctx.body = req;
+    }
 
 }
 
