@@ -9,8 +9,10 @@ services:
       PORT: 5000
       NODE_PATH: app/src
       NODE_ENV: test
+      LOCAL_URL: http://127.0.0.1:4110
       CT_URL: http://mymachine:9000
       CT_REGISTER_MODE: auto
       CT_TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im1pY3Jvc2VydmljZSIsImNyZWF0ZWRBdCI6IjIwMTYtMDktMTQifQ.IRCIRm1nfIQTfda_Wb6Pg-341zhV8soAgzw7dd5HxxQ
       API_VERSION: v1
+      FASTLY_ENABLED: "false"
     command: test
