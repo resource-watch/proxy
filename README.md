@@ -1,6 +1,6 @@
 # Proxy Microservice
 
-[![Build Status](https://travis-ci.org/resource-watch/proxy.svg?branch=develop)](https://travis-ci.org/resource-watch/proxy)
+[![Build Status](https://travis-ci.com/resource-watch/proxy.svg?branch=dev)](https://travis-ci.com/resource-watch/proxy)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/2d6843b256ec3549b0b5/test_coverage)](https://codeclimate.com/github/resource-watch/proxy/test_coverage)
 
 ## Dependencies
