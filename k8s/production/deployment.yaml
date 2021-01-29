@@ -65,6 +65,23 @@ spec:
                   name: mssecrets
             - name: URLS
               value: bhuvan5#http://bhuvan5.nrsc.gov.in,wris#http://59.179.19.250/ArcGIS/services/SubInfoSysLCC,snitcr-ign#http://geos.snitcr.go.cr/be/IGN_5/wms,snitcr-ceniga#http://18.191.99.184:8080/geoserver/wms
+            - name: FASTLY_ENABLED
+              valueFrom:
+                secretKeyRef:
+                  key: FASTLY_ENABLED
+                  name: mssecrets
+            - name: FASTLY_APIKEY
+              valueFrom:
+                secretKeyRef:
+                  key: FASTLY_APIKEY
+                  name: mssecrets
+                  optional: true
+            - name: FASTLY_SERVICEID
+              valueFrom:
+                secretKeyRef:
+                  key: FASTLY_SERVICEID
+                  name: mssecrets
+                  optional: true
           image: gfwdockerhub/proxy
           imagePullPolicy: Always
           livenessProbe:
