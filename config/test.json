@@ -4,5 +4,6 @@
     "level": "debug",
     "toFile": false,
     "dirLogFile": null
-  }
+  },
+  "urls": "test1#http://test1.com,test2#http://test2.com"
 }
