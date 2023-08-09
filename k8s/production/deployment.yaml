@@ -43,25 +43,15 @@ spec:
               value: app/src
             - name: LOCAL_URL
               value: http://proxy.prep.svc.cluster.local:5000
-            - name: CT_URL
+            - name: GATEWAY_URL
               valueFrom:
                 secretKeyRef:
-                  key: CT_URL
+                  key: GATEWAY_URL
                   name: mssecrets
-            - name: CT_TOKEN
+            - name: MICROSERVICE_TOKEN
               valueFrom:
                 secretKeyRef:
-                  key: CT_TOKEN
-                  name: mssecrets
-            - name: CT_REGISTER_MODE
-              valueFrom:
-                secretKeyRef:
-                  key: CT_REGISTER_MODE
-                  name: mssecrets
-            - name: API_VERSION
-              valueFrom:
-                secretKeyRef:
-                  key: API_VERSION
+                  key: MICROSERVICE_TOKEN
                   name: mssecrets
             - name: URLS
               value: bhuvan5#http://bhuvan5.nrsc.gov.in,wris#http://59.179.19.250/ArcGIS/services/SubInfoSysLCC,snitcr-ign#http://geos.snitcr.go.cr/be/IGN_5/wms,snitcr-ceniga#http://18.191.99.184:8080/geoserver/wms
@@ -82,6 +72,16 @@ spec:
                   key: FASTLY_SERVICEID
                   name: mssecrets
                   optional: true
+            - name: AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  key: AWS_REGION
+                  name: mssecrets
+            - name: REQUIRE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: REQUIRE_API_KEY
+                  name: mssecrets
           image: gfwdockerhub/proxy
           imagePullPolicy: Always
           livenessProbe:

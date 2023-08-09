@@ -1,7 +1,7 @@
 const Router = require('koa-router');
-const logger = require('logger');
 const config = require('config');
 const request = require('request');
+const logger = require('logger');
 
 const URLS = config.get('urls').split(',').map((pack) => pack.split('#')).reduce((prev, parts) => {
     // eslint-disable-next-line prefer-destructuring

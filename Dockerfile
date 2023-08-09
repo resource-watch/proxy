@@ -1,36 +1,28 @@
-FROM node:12
+FROM node:20.4-alpine3.18
 MAINTAINER info@vizzuality.com
 
 ENV NAME proxy-service
 ENV USER proxy-service
 
-RUN apt-get update && apt-get install -y \
-	apt-transport-https \
-	ca-certificates \
-	curl \
-  gnupg \
-  bash \
-  build-essential \
-  python && rm -rf /var/lib/apt/lists/*
+RUN apk update && apk upgrade && \
+    apk add --no-cache --update bash git openssh python3 alpine-sdk
 
-# Add Chrome as a user
-RUN groupadd -r $USER && useradd -r -g $USER -G audio,video $USER \
-    && mkdir -p /home/$USER && chown -R $USER:$USER /home/$USER
+RUN addgroup $USER && adduser -s /bin/bash -D -G $USER $USER
 
 RUN yarn global add grunt-cli bunyan
 
-RUN mkdir -p /home/$NAME
-COPY package.json /home/$NAME/package.json
-COPY yarn.lock /home/$NAME/yarn.lock
-RUN cd /home/$NAME && yarn
+RUN mkdir -p /opt/$NAME
+COPY package.json /opt/$NAME/package.json
+COPY yarn.lock /opt/$NAME/yarn.lock
+RUN cd /opt/$NAME && yarn
 
-COPY entrypoint.sh /home/$USER/entrypoint.sh
-COPY config /home/$USER/config
+COPY entrypoint.sh /opt/$NAME/entrypoint.sh
+COPY config /opt/$NAME/config
 
-WORKDIR /home/$NAME
+WORKDIR /opt/$NAME
 
-COPY ./app /home/$NAME/app
-RUN chown -R $USER:$USER /home/$NAME
+COPY ./app /opt/$NAME/app
+RUN chown -R $USER:$USER /opt/$NAME
 
 # Tell Docker we are going to use this ports
 EXPOSE 5000
